@@ -16,7 +16,7 @@ public class Main {
 				i++;
 			}
 			in.close();
-			Game game = new Game(puzzle);
+			new Game(puzzle);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}

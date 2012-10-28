@@ -31,6 +31,12 @@ public class Game {
 		case 6:
 			player = new PSO(gameBoard);
 			break;
+		case 7:
+			player = new HC(gameBoard);
+			break;
+		case 8:
+			player = new SA(gameBoard);
+			break;
 		default:
 			System.out.println("Invalid choice. Try again later.");
 			break;
@@ -52,17 +58,40 @@ public class Game {
 		System.out.println("4: Backjumping");
 		System.out.println("5: Conflich Directed Backjumping");
 		System.out.println("6: Particle Swarm Optimization");
+		System.out.println("7: Hill Climbing");
+		System.out.println("8: Simulated Annealing");
 	}
-
-	public void buildBoard(String[] puzzle) {
-		gameBoard = new Tile[9][9];
+	
+	public void initializeBoard(){
+		for (int i = 0; i < 9; i++){
+			for (int j = 0 ; j < 9; j++){
+				gameBoard[i][j] = new Tile(0, null, null, null);
+			}
+		}
+	}
+	public void assignNums(String[] puzzle){
 		for (int i = 0; i < 9; i++) {
 			char[] charLine = puzzle[i].toCharArray();
 			for (int j = 0; j < 9; j++) {
 				String c = charLine[j] + "";
-				gameBoard[i][j] = new Tile(Integer.parseInt(c));
+				gameBoard[i][j].setNum(Integer.parseInt(c));
 			}
 		}
+	}
+	public void assignRows(){
+		Tile[] rowAssigns;
+		for (int i = 0; i < 9; i++){
+			rowAssigns = new Tile[8];
+			
+		}
+	}
+
+	public void buildBoard(String[] puzzle) {
+		gameBoard = new Tile[9][9];
+		initializeBoard();
+		assignNums(puzzle);
+		assignRows();
+	
 	}
 
 	public void printColSeparator() {
