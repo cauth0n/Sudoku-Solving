@@ -2,8 +2,20 @@ package Game;
 
 import java.util.Scanner;
 
+import Players.ACO;
+import Players.APlayer;
+import Players.BJ;
+import Players.CDBJ;
+import Players.FC;
+import Players.GA;
+import Players.HC;
+import Players.PSO;
+import Players.Randomize;
+import Players.SA;
+
 public class Game {
 	private Tile[][] gameBoard;
+	private final int boardSize = 9;
 	private APlayer player;
 
 	public Game(String[] puzzle) {
@@ -14,28 +26,31 @@ public class Game {
 	public void playerSelect(int choice) {
 		switch (choice) {
 		case 1:
-			player = new R(gameBoard);
+			player = new Randomize(gameBoard);		//Randomize
 			break;
 		case 2:
-			player = new GA(gameBoard);
+			player = new GA(gameBoard);		//Genetic Algorithm
 			break;
 		case 3:
-			player = new FC(gameBoard);
+			player = new FC(gameBoard);		//Forward Checking
 			break;
 		case 4:
-			player = new BJ(gameBoard);
+			player = new BJ(gameBoard);		//Back Jumping
 			break;
 		case 5:
-			player = new CDBJ(gameBoard);
+			player = new CDBJ(gameBoard);	//Conflict-Directed Back Jumping
 			break;
 		case 6:
-			player = new PSO(gameBoard);
+			player = new PSO(gameBoard);	//Particle Swarm Optimization
 			break;
 		case 7:
-			player = new HC(gameBoard);
+			player = new HC(gameBoard);		//Hill Climbing
 			break;
 		case 8:
-			player = new SA(gameBoard);
+			player = new SA(gameBoard);		//Simulate Annealing
+			break;
+		case 9:
+			player = new ACO(gameBoard);	//Ant Colony Optimization
 			break;
 		default:
 			System.out.println("Invalid choice. Try again later.");
@@ -60,17 +75,18 @@ public class Game {
 		System.out.println("6: Particle Swarm Optimization");
 		System.out.println("7: Hill Climbing");
 		System.out.println("8: Simulated Annealing");
+		System.out.println("9: Ant Colony Optimization");
 	}
 	
 	public void initializeBoard(){
-		for (int i = 0; i < 9; i++){
-			for (int j = 0 ; j < 9; j++){
-				gameBoard[i][j] = new Tile(0, null, null, null);
+		for (int i = 0; i < boardSize; i++){
+			for (int j = 0 ; j < boardSize; j++){
+				gameBoard[i][j] = new Tile(0);
 			}
 		}
 	}
 	public void assignNums(String[] puzzle){
-		for (int i = 0; i < 9; i++) {
+		for (int i = 0; i < boardSize; i++) {
 			char[] charLine = puzzle[i].toCharArray();
 			for (int j = 0; j < 9; j++) {
 				String c = charLine[j] + "";
@@ -78,20 +94,12 @@ public class Game {
 			}
 		}
 	}
-	public void assignRows(){
-		Tile[] rowAssigns;
-		for (int i = 0; i < 9; i++){
-			rowAssigns = new Tile[8];
-			
-		}
-	}
+
 
 	public void buildBoard(String[] puzzle) {
-		gameBoard = new Tile[9][9];
+		gameBoard = new Tile[boardSize][boardSize];
 		initializeBoard();
 		assignNums(puzzle);
-		assignRows();
-	
 	}
 
 	public void printColSeparator() {
